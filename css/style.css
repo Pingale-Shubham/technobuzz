@@ -405,7 +405,7 @@ animation-delay: .8s;
 .logo {
   font-size: 2.2rem;
   font-weight: 700;
-  color: #fff;
+  color: #FFFF00;
   text-decoration: none;
   display: inline-block;
   white-space: nowrap;
@@ -415,7 +415,7 @@ animation-delay: .8s;
 
 /* Special styling for the first letters */
 .special-letter {
-  color: #00ffcc;         /* Highlight color */
+  color: #FFD700;         /* Highlight color */
   font-size: 3rem;        /* Larger size */
   font-weight: 900;       /* Bolder weight */
   text-shadow: 1px 1px 5px rgba(0, 255, 204, 0.7); /* Glow effect */
@@ -431,7 +431,7 @@ animation-delay: .8s;
 
 /* Hover effect */
 .logo:hover {
-  color: #ffeb3b; /* Your brand hover color */
+  color: #FFA500; /* Your brand hover color */
   transform: scale(1.05);
 }
 
