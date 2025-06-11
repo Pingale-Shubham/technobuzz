@@ -312,38 +312,26 @@
 
 /* Logo link styling */
 /* .theme-main-header.fixed. */
+/* Logo Link Styling */
 .logo {
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: #ffd700 ;
+  display: inline-block;
   text-decoration: none;
-  display: inline-block;
-  white-space: nowrap;
-  text-transform: uppercase;
-  transition: all 0.4s ease;
+  margin-bottom: 15px;
 }
 
-/* Special styling for the first letters */
-.special-letter {
-  color: #ffd700;         /* Highlight color */
-  font-size: 3rem;        /* Larger size */
-  font-weight: 900;       /* Bolder weight */
-  text-shadow: 1px 1px 5px rgba(0, 255, 204, 0.7); /* Glow effect */
-  transition: transform 0.3s ease;
-  display: inline-block;
+/* Logo Image Styling */
+.logo img {
+  height: 40px;         /* Adjust the height as needed */
+  width: auto;          /* Maintain aspect ratio */
+  display: block;       /* Removes extra space below image */
+  transition: transform 0.3s ease; /* Smooth hover effect */
 }
 
-/* Add a hover effect just to the letters if desired */
-.special-letter:hover {
-  transform: scale(1.2) rotate(5deg);
+/* Optional Hover Effect */
+.logo:hover img {
+  transform: scale(1.05); /* Slight zoom on hover */
 }
 
-
-/* Hover effect */
-.logo:hover {
-  color: #ffee00; /* Your brand hover color */
-  transform: scale(1.05);
-}
 
 /* Bootstrap handles .dropdown-menu visibility on .open parent */
 @media (max-width: 768px) {
