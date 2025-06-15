@@ -1,45 +1,92 @@
 // Chatbot functionality
 document.addEventListener('DOMContentLoaded', function() {
-    // Create chatbot elements
-    const chatbotHTML = `
-        <div class="chatbot-container">
-            <button class="chatbot-button">
-                <i class="fa fa-comments"></i>
-            </button>
-            <div class="chatbot-window">
-                <div class="chatbot-header">
-                    <h3>Chat with us</h3>
-                    <button class="chatbot-close">&times;</button>
-                </div>
-                <div class="chatbot-messages">
-                    <div class="message bot">
-                        <div class="message-content">
-                            Hello! How can I help you today?
-                        </div>
-                    </div>
-                </div>
-                <div class="chatbot-input">
-                    <input type="text" placeholder="Type your message...">
-                    <button><i class="fa fa-paper-plane"></i></button>
-                </div>
-            </div>
-        </div>
-    `;
-
-    // Add chatbot to the page
-    document.body.insertAdjacentHTML('beforeend', chatbotHTML);
-
-    // Get chatbot elements
     const chatbotButton = document.querySelector('.chatbot-button');
     const chatbotWindow = document.querySelector('.chatbot-window');
     const chatbotClose = document.querySelector('.chatbot-close');
+    const chatbotMessages = document.querySelector('.chatbot-messages');
     const chatbotInput = document.querySelector('.chatbot-input input');
     const chatbotSend = document.querySelector('.chatbot-input button');
-    const chatbotMessages = document.querySelector('.chatbot-messages');
+
+    // Predefined responses
+    const responses = {
+        greeting: [
+            "Hello! Welcome to Technobuzz Systems. How can I assist you today?",
+            "Hi there! I'm your Technobuzz assistant. What can I help you with?",
+            "Welcome! How may I help you with our services today?"
+        ],
+        services: {
+            "web development": "We offer comprehensive web development services including custom websites, e-commerce solutions, and web applications. Would you like to know more about any specific service?",
+            "app development": "Our app development services cover both iOS and Android platforms. We create native and cross-platform applications tailored to your needs. Would you like to discuss your project?",
+            "software": "We provide custom software development solutions for businesses of all sizes. Our team specializes in creating scalable and efficient software systems. What type of software solution are you looking for?",
+            "consulting": "Our IT consulting services help businesses optimize their technology infrastructure and digital strategy. Would you like to schedule a consultation?"
+        },
+        pricing: "Our pricing varies based on project requirements and scope. Would you like to schedule a free consultation to discuss your specific needs?",
+        contact: "You can reach us through:\n- Email: info@technobuzz.com\n- Phone: +1 (555) 123-4567\n- Office: 123 Tech Street, Digital City\nWould you like to schedule a meeting?",
+        default: "I'm not sure I understand. Could you please rephrase your question? You can ask me about our services, pricing, or how to contact us."
+    };
+
+    // Common questions and their variations
+    const questionPatterns = {
+        greeting: ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening'],
+        services: {
+            web: ['web', 'website', 'web development', 'web site', 'web design'],
+            app: ['app', 'application', 'mobile app', 'android', 'ios'],
+            software: ['software', 'custom software', 'software development'],
+            consulting: ['consulting', 'consultation', 'it consulting', 'tech consulting']
+        },
+        pricing: ['price', 'cost', 'pricing', 'how much', 'fee', 'charges'],
+        contact: ['contact', 'reach', 'email', 'phone', 'address', 'location', 'where']
+    };
+
+    // Function to get random response from array
+    function getRandomResponse(array) {
+        return array[Math.floor(Math.random() * array.length)];
+    }
+
+    // Function to add message to chat
+    function addMessage(text, isUser = false) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+        messageDiv.innerHTML = `<div class="message-content">${text}</div>`;
+        chatbotMessages.appendChild(messageDiv);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    }
+
+    // Function to process user input
+    function processUserInput(input) {
+        input = input.toLowerCase().trim();
+        
+        // Check for greeting
+        if (questionPatterns.greeting.some(greeting => input.includes(greeting))) {
+            return getRandomResponse(responses.greeting);
+        }
+
+        // Check for services
+        for (const [service, patterns] of Object.entries(questionPatterns.services)) {
+            if (patterns.some(pattern => input.includes(pattern))) {
+                return responses.services[service];
+            }
+        }
+
+        // Check for pricing
+        if (questionPatterns.pricing.some(term => input.includes(term))) {
+            return responses.pricing;
+        }
+
+        // Check for contact
+        if (questionPatterns.contact.some(term => input.includes(term))) {
+            return responses.contact;
+        }
+
+        return responses.default;
+    }
 
     // Toggle chatbot window
     chatbotButton.addEventListener('click', () => {
         chatbotWindow.classList.toggle('active');
+        if (chatbotWindow.classList.contains('active')) {
+            addMessage(getRandomResponse(responses.greeting));
+        }
     });
 
     // Close chatbot window
@@ -47,49 +94,18 @@ document.addEventListener('DOMContentLoaded', function() {
         chatbotWindow.classList.remove('active');
     });
 
-    // Send message function
+    // Send message
     function sendMessage() {
         const message = chatbotInput.value.trim();
         if (message) {
-            // Add user message
-            addMessage(message, 'user');
+            addMessage(message, true);
             chatbotInput.value = '';
-
-            // Simulate bot response
+            
+            // Simulate typing delay
             setTimeout(() => {
-                const botResponse = getBotResponse(message);
-                addMessage(botResponse, 'bot');
+                const response = processUserInput(message);
+                addMessage(response);
             }, 1000);
-        }
-    }
-
-    // Add message to chat
-    function addMessage(text, sender) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${sender}`;
-        messageDiv.innerHTML = `<div class="message-content">${text}</div>`;
-        chatbotMessages.appendChild(messageDiv);
-        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-    }
-
-    // Simple bot response logic
-    function getBotResponse(message) {
-        const lowerMessage = message.toLowerCase();
-        
-        if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
-            return 'Hello! How can I assist you today?';
-        } else if (lowerMessage.includes('help')) {
-            return 'I can help you with information about our services, pricing, or general inquiries. What would you like to know?';
-        } else if (lowerMessage.includes('service') || lowerMessage.includes('services')) {
-            return 'We offer various services including web development, mobile app development, and digital marketing. Which service are you interested in?';
-        } else if (lowerMessage.includes('price') || lowerMessage.includes('cost')) {
-            return 'Our pricing varies based on project requirements. Would you like to schedule a consultation to discuss your specific needs?';
-        } else if (lowerMessage.includes('contact') || lowerMessage.includes('email')) {
-            return 'You can reach us at info@technobuzz.com or call us at +1 (555) 123-4567.';
-        } else if (lowerMessage.includes('thank')) {
-            return 'You\'re welcome! Is there anything else I can help you with?';
-        } else {
-            return 'I\'m not sure I understand. Could you please rephrase your question or contact our support team for more specific assistance.';
         }
     }
 
@@ -100,6 +116,13 @@ document.addEventListener('DOMContentLoaded', function() {
     chatbotInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             sendMessage();
+        }
+    });
+
+    // Add initial greeting when chatbot is opened
+    chatbotButton.addEventListener('click', () => {
+        if (!chatbotMessages.children.length) {
+            addMessage(getRandomResponse(responses.greeting));
         }
     });
 }); 

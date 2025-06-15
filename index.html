@@ -13,6 +13,8 @@
 		<!-- Favicon -->
 		<link rel="icon" type="image/png" sizes="56x56" href="images/fav-icon/icon.png">
 
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 		<!-- Main style sheet -->
 		<link rel="stylesheet" type="text/css" href="css/style.css">
@@ -412,27 +414,60 @@
 				<i class="fa fa-long-arrow-up" aria-hidden="true"></i>
 			</button>
 
-		<!-- Js File_________________________________ -->
+			<!-- Chatbot Container -->
+			<div class="chatbot-container">
+				<button class="chatbot-button">
+					<i class="fa fa-comments"></i>
+				</button>
+				<div class="chatbot-window">
+					<div class="chatbot-header">
+						<h3>Chat with us</h3>
+						<button class="chatbot-close">&times;</button>
+					</div>
+					<div class="chatbot-messages"></div>
+					<div class="chatbot-input">
+						<input type="text" placeholder="Type your message...">
+						<button><i class="fa fa-paper-plane"></i></button>
+					</div>
+				</div>
+			</div>
 
-		<!-- j Query -->
-		<script type="text/javascript" src="vendor/jquery.2.2.3.min.js"></script>
+			<!-- Js File_________________________________ -->
 
-		<!-- Bootstrap JS -->
-		<script type="text/javascript" src="vendor/bootstrap/bootstrap.min.js"></script>
+			<!-- j Query -->
+			<script type="text/javascript" src="vendor/jquery.2.2.3.min.js"></script>
 
-		<script type="text/javascript" src="js/theme.js"></script>
-		
-		<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Bootstrap JS -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<!-- Policy JS -->
-<script src="js/policy.js"></script>
-<!-- Essential Scripts -->
-<script src="vendor/jquery-2.2.3.min.js"></script>
-<script src="vendor/bootstrap/bootstrap.min.js"></script>
-<script src="js/chatbot.js"></script>
+			<!-- Bootstrap JS -->
+			<script type="text/javascript" src="vendor/bootstrap/bootstrap.min.js"></script>
 
+			<script type="text/javascript" src="js/theme.js"></script>
+			
+			<!-- jQuery -->
+			<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+			<!-- Bootstrap JS -->
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+			<!-- Policy JS -->
+			<script src="js/policy.js"></script>
+			<!-- Essential Scripts -->
+			<script src="vendor/jquery-2.2.3.min.js"></script>
+			<script src="vendor/bootstrap/bootstrap.min.js"></script>
+			<script src="js/chatbot.js"></script>
+
+			<script>
+				// Scroll to top button functionality
+				$(window).scroll(function() {
+					if ($(this).scrollTop() > 300) {
+						$('.scroll-top').fadeIn();
+					} else {
+						$('.scroll-top').fadeOut();
+					}
+				});
+
+				$('.scroll-top').click(function() {
+					$('html, body').animate({scrollTop: 0}, 800);
+					return false;
+				});
+			</script>
 		</div> <!-- /.main-page-wrapper -->
 	</body>
 </html>
