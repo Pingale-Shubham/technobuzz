@@ -31,26 +31,47 @@
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-  .theme-main-header .container {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
+  .theme-main-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 24px;
+    background: rgba(0,0,0,0.85);
+    max-height: 70px;
+    min-height: 60px;
   }
-  
+
   .theme-main-header .logo {
+    margin: 0 12% 0 2%;
     width: auto;
-    margin: 0;
-    float: left;
-    display: inline-block;
+    max-width: 180px;
+    display: flex;
+    align-items: center;
   }
-  
+
+  .theme-main-header .logo img {
+    height: 48px;
+    max-width: 160px;
+    width: auto;
+    display: block;
+  }
+
   .theme-main-menu.navbar {
-    float: right;
-    margin-top: 0;
+    float: none;
+    margin: 0 0 0 10% !important;
   }
-  
+
+  .theme-main-menu .navbar-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+  }
+
   .theme-main-menu .navbar-nav > li > a {
-    padding: 9px 12px;
-    font-size: 13px;
+    padding: 8px 10px;
+    font-size: 14px;
   }
   
   .theme-main-header.fixed .logo {
@@ -118,3 +139,101 @@
   .hermes.tparrows {display: none;}
   .recent-single-post .post {width: 100%;padding: 12px 0 0 0;}
 }
+
+/* --- Responsive Fixes Synced with style.css --- */
+
+/* Banner Responsive Fixes */
+@media (min-width: 768px) {
+  .banner {
+    height: 80vh;
+  }
+  .desktop-img { display: block; }
+  .mobile-img { display: none; }
+}
+@media (max-width: 767px) {
+  .banner {
+    height: auto;
+    min-height: 300px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .desktop-img { display: none; }
+  .mobile-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    opacity: 1;
+  }
+}
+@media (max-width: 480px) {
+  .banner { min-height: 250px; }
+  .mobile-img { object-fit: contain; }
+}
+
+/* Service Card Responsive Fixes */
+@media (max-width: 1200px) {
+  .service-cards { gap: 25px; }
+  .service-card { min-width: 300px; max-width: 400px; }
+}
+@media (max-width: 992px) {
+  #service-section { padding: 60px 0; }
+  .service-cards { gap: 20px; }
+  .service-card { min-width: 280px; max-width: 380px; padding: 35px 25px; }
+  .service-icon { width: 80px; height: 80px; margin-bottom: 25px; }
+  .service-icon i { font-size: 32px; }
+  .service-card h3 { font-size: 22px; margin-bottom: 18px; }
+  .service-card p { font-size: 14px; }
+}
+@media (max-width: 768px) {
+  #service-section { padding: 50px 0; }
+  #service-section .theme-title h2 { font-size: 28px; }
+  .service-cards { flex-direction: column; gap: 25px; align-items: center; }
+  .service-card { min-width: auto; max-width: 500px; width: 100%; padding: 30px 25px; }
+  .service-icon { width: 75px; height: 75px; margin-bottom: 20px; }
+  .service-icon i { font-size: 30px; }
+  .service-card h3 { font-size: 20px; margin-bottom: 15px; }
+  .service-card p { font-size: 14px; line-height: 1.6; }
+}
+@media (max-width: 480px) {
+  #service-section { padding: 40px 0; }
+  #service-section .theme-title h2 { font-size: 24px; }
+  .service-card { padding: 25px 20px; border-radius: 12px; }
+  .service-icon { width: 65px; height: 65px; margin-bottom: 18px; }
+  .service-icon i { font-size: 26px; }
+  .service-card h3 { font-size: 18px; margin-bottom: 12px; }
+  .service-card p { font-size: 13px; line-height: 1.5; }
+  .service-card:hover { transform: translateY(-8px); }
+}
+
+/* Footer Responsive Fixes */
+@media (max-width: 767px) {
+  footer { padding: 15px 0 10px 0; }
+  footer ul li a { width: 35px; height: 35px; line-height: 35px; font-size: 14px; }
+  footer p { font-size: 13px; padding: 0 15px; }
+}
+
+/* Navbar and Menu Responsive Fixes */
+@media (max-width: 767px) {
+  .navbar-collapse { max-height: none; overflow-y: visible; padding: 0; }
+  .navbar-nav { margin: 0; }
+  .navbar-nav > li { border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+  .navbar-nav > li > a { padding: 15px; color: #333; font-weight: 500; }
+  .navbar-nav .dropdown-holder { position: relative; }
+  .navbar-nav .dropdown-holder .dropdown-toggle { position: relative; padding-right: 30px; cursor: pointer; user-select: none; -webkit-user-select: none; }
+  .navbar-nav .dropdown-holder .dropdown-toggle .caret { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); border-top: 4px solid #333; border-right: 4px solid transparent; border-left: 4px solid transparent; transition: transform 0.3s ease; }
+  .navbar-nav .dropdown-holder.active .dropdown-toggle .caret { transform: translateY(-50%) rotate(180deg); }
+  .navbar-nav .sub-menu { position: static; display: none; width: 100%; background: rgba(0, 0, 0, 0.03); padding: 0; margin: 0; box-shadow: none; border: none; }
+  .navbar-nav .dropdown-holder.active .sub-menu { display: block; }
+  .navbar-nav .sub-menu li { padding: 0; margin: 0; border: none; }
+}
+
+/* Chatbot Responsive Fixes */
+@media (max-width: 767px) {
+  .chatbot-window { width: calc(100% - 40px); height: calc(100% - 100px); bottom: 80px; }
+  .chatbot-button { width: 50px; height: 50px; }
+  .chatbot-button i { font-size: 20px; }
+}
+
+/* --- End Responsive Fixes --- */

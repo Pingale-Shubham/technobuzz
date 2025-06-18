@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Predefined responses
     const responses = {
-        greeting: [
+        greeting: [ 
             "Hello! Welcome to Technobuzz Systems. How can I assist you today?",
             "Hi there! I'm your Technobuzz assistant. What can I help you with?",
             "Welcome! How may I help you with our services today?"
@@ -52,32 +52,36 @@ document.addEventListener('DOMContentLoaded', function() {
         chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
     }
 
-    // Function to process user input
-    function processUserInput(input) {
-        input = input.toLowerCase().trim();
-        
-        // Check for greeting
-        if (questionPatterns.greeting.some(greeting => input.includes(greeting))) {
-            return getRandomResponse(responses.greeting);
-        }
-
-        // Check for services
-        for (const [service, patterns] of Object.entries(questionPatterns.services)) {
-            if (patterns.some(pattern => input.includes(pattern))) {
-                return responses.services[service];
+    // Function to match user input to a response
+    function getBotResponse(input) {
+        const lowerInput = input.toLowerCase();
+        // Greeting
+        for (const greet of questionPatterns.greeting) {
+            if (lowerInput.includes(greet)) {
+                return getRandomResponse(responses.greeting);
             }
         }
-
-        // Check for pricing
-        if (questionPatterns.pricing.some(term => input.includes(term))) {
-            return responses.pricing;
+        // Services
+        for (const [serviceKey, keywords] of Object.entries(questionPatterns.services)) {
+            for (const keyword of keywords) {
+                if (lowerInput.includes(keyword)) {
+                    return responses.services[serviceKey + (serviceKey === 'web' ? ' development' : '')] || responses.services[serviceKey] || responses.default;
+                }
+            }
         }
-
-        // Check for contact
-        if (questionPatterns.contact.some(term => input.includes(term))) {
-            return responses.contact;
+        // Pricing
+        for (const price of questionPatterns.pricing) {
+            if (lowerInput.includes(price)) {
+                return responses.pricing;
+            }
         }
-
+        // Contact
+        for (const contact of questionPatterns.contact) {
+            if (lowerInput.includes(contact)) {
+                return responses.contact;
+            }
+        }
+        // Default
         return responses.default;
     }
 
@@ -95,17 +99,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Send message
-    function sendMessage() {
+    async function sendMessage() {
         const message = chatbotInput.value.trim();
         if (message) {
             addMessage(message, true);
             chatbotInput.value = '';
-            
             // Simulate typing delay
             setTimeout(() => {
-                const response = processUserInput(message);
+                const response = getBotResponse(message);
                 addMessage(response);
-            }, 1000);
+            }, 600);
         }
     }
 
